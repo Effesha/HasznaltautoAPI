@@ -1,0 +1,13 @@
+﻿{
+  "profiles": {
+    "HasznaltAuto": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "applicationUrl": "http://localhost:1337;https://localhost:32767",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
