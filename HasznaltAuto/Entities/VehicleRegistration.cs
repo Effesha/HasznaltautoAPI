@@ -5,17 +5,15 @@ using System.Collections.Generic;
 
 namespace HasznaltAuto.Entities;
 
-public partial class User
+public partial class VehicleRegistration
 {
     public int Id { get; set; }
 
-    public string Name { get; set; }
+    public string LicensePlate { get; set; }
 
-    public string Password { get; set; }
-
-    public virtual ICollection<CarHistory> CarHistories { get; set; } = new List<CarHistory>();
+    public int LicensePlateTypeId { get; set; }
 
     public virtual ICollection<Car> Cars { get; set; } = new List<Car>();
 
-    public virtual ICollection<Role> Roles { get; set; } = new List<Role>();
+    public virtual LicensePlateType LicensePlateType { get; set; }
 }

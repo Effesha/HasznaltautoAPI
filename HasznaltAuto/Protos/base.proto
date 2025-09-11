@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option csharp_namespace = "HasznaltAuto";
+
+message Empty {}
+
+message ResultResponse {
+	bool success = 1;
+	string message = 2;
+}

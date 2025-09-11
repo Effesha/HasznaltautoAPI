@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option csharp_namespace = "HasznaltAuto";
+
+message CarType {
+	int32 id = 1;
+	int32 price = 2;
+	string production_date = 3;
+	int32 mileage = 4;
+	int32 fuel_type_id = 5;
+	int32 current_owner = 6;
+	bool is_deleted = 7;
+	int32 vehicle_registration_id = 8;
+	int32 make_id = 9;
+	int32 model_id = 10;
+}
+
+message FuelType {
+	int32 id = 1;
+	string name = 2;
+}
+
+message LicensePlateType {
+	int32 id = 1;
+	string name = 2;
+}
+
+message VehicleRegistrationType {
+	int32 id = 1;
+	string license_plate = 2;
+	int32 license_plate_type_type_id = 3;
+}
+
+message MakeType {
+	int32 id = 1;
+	string name = 2;
+}
+
+message ModelType {
+	int32 id = 1;
+	string name = 2;
+}

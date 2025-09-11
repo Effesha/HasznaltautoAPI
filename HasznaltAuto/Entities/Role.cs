@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace HasznaltAuto.Entities;
 
-public partial class FuelType
+public partial class Role
 {
     public int Id { get; set; }
 
     public string Name { get; set; }
 
-    public virtual ICollection<Car> Cars { get; set; } = new List<Car>();
+    public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

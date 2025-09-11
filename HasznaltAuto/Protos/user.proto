@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+option csharp_namespace = "HasznaltAuto";
+
+import "Protos/base.proto";
+
+service UserGrpc {
+	rpc Register(RegistrationRequest) returns (ResultResponse) {}
+	rpc Login(LoginRequest) returns (LoginResponse) {}
+	rpc Logout(LogoutRequest) returns (ResultResponse) {}
+}
+
+message UserType {
+	string name = 1;
+	string password = 2;
+}
+
+message RoleType {
+	int32 id = 1;
+	string name = 2;
+}
+
+message UserRoleType {
+	int32 user_id = 1;
+	int32 role_id = 2;
+}
+
+message RegistrationRequest {
+	UserType user = 1;
+}
+
+message LoginRequest {
+	UserType user = 1;
+}
+
+message LoginResponse {
+	string session_id = 1;
+	int32 current_user = 2;
+	string message = 3;
+}
+
+message LogoutRequest {
+	string session_id = 1;
+}

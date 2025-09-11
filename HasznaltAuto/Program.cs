@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
+builder.Services.AddGrpcReflection();
+builder.Services.AddSingleton<BaseService>();
 
 builder.Services.AddDbContext<HasznaltAutoDbContext>(options =>
 {
@@ -18,7 +20,14 @@ builder.Services.AddDbContext<HasznaltAutoDbContext>(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.MapGrpcService<HasznaltAutoService>();
+app.MapGrpcService<HasznaltAutoService>().EnableGrpcWeb();
+app.MapGrpcService<UserService>().EnableGrpcWeb();
 app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
+
+IWebHostEnvironment env = app.Environment;
+if (env.IsDevelopment())
+{
+    app.MapGrpcReflectionService();
+}
 
 app.Run();
