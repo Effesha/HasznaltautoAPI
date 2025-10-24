@@ -1,5 +1,5 @@
+using HasznaltAuto.API.Services;
 using HasznaltAuto.Entities;
-using HasznaltAuto.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
