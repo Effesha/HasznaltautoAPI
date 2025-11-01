@@ -1,13 +1,19 @@
 syntax = "proto3";
 
-option csharp_namespace = "HasznaltAuto";
+option csharp_namespace = "HasznaltAuto.API";
 
 import "Protos/base.proto";
 
 service UserGrpc {
+	rpc ListUsers(Empty) returns (stream ListUsersResponse) {}
 	rpc Register(RegistrationRequest) returns (ResultResponse) {}
 	rpc Login(LoginRequest) returns (LoginResponse) {}
 	rpc Logout(LogoutRequest) returns (ResultResponse) {}
+}
+
+message ListUsersResponse {
+	int32 id = 1;
+	string name = 2;
 }
 
 message UserType {

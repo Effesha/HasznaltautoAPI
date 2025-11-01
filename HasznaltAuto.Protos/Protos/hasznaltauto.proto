@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "HasznaltAuto";
+option csharp_namespace = "HasznaltAuto.API";
 
 import "Protos/car.proto";
 import "Protos/base.proto";
@@ -13,6 +13,10 @@ service HasznaltAutoGrpc {
 	rpc UpdateCar(UpdateCarRequest) returns (ResultResponse) {}
 	rpc DeleteCar(DeleteCarRequest) returns (ResultResponse) {}
 	rpc BuyCar(BuyCarRequest) returns (ResultResponse) {}
+
+	rpc ListModels(Empty) returns (stream ModelType) {}
+	rpc ListMakes(Empty) returns (stream MakeType) {}
+	rpc ListFuelTypes(Empty) returns (stream FuelType) {}
 }
 
 message ListCarsFilteredRequest {

@@ -1,4 +1,4 @@
-﻿namespace HasznaltAuto.API.Services;
+﻿namespace HasznaltAuto.API.GrpcServices;
 
 public class BaseService(ILogger<BaseService> logger)
 {

@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace HasznaltAuto.Entities;
+namespace HasznaltAuto.API.Entities;
 
 public partial class LicensePlateType
 {

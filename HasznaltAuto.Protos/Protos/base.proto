@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option csharp_namespace = "HasznaltAuto.API";
+
+message Empty {}
+
+message ResultResponse {
+	bool success = 1;
+	string message = 2;
+}
+
+message EntityCreatedResponse {
+	int32 entityId = 1;
+	bool success = 2;
+	string message = 3;
+}

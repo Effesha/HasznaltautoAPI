@@ -1,5 +1,7 @@
-using HasznaltAuto.API.Services;
-using HasznaltAuto.Entities;
+using HasznaltAuto.API.Entities;
+using HasznaltAuto.API.GrpcServices;
+using HasznaltAuto.API.Repositories;
+using HasznaltAuto.API.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,11 +19,15 @@ builder.Services.AddDbContext<HasznaltAutoDbContext>(options =>
     options.UseSqlServer("name=ConnectionStrings:HasznaltAutoDbContext");
 });
 
+builder.Services.AddScoped<IRepository<Car>, CarRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.MapGrpcService<HasznaltAutoService>().EnableGrpcWeb();
 app.MapGrpcService<UserService>().EnableGrpcWeb();
+app.MapGrpcService<CarService>().EnableGrpcWeb();
+
 app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
 IWebHostEnvironment env = app.Environment;

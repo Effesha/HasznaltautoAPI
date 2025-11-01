@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace HasznaltAuto.Entities;
+namespace HasznaltAuto.API.Entities;
 
 public partial class HasznaltAutoDbContext : DbContext
 {

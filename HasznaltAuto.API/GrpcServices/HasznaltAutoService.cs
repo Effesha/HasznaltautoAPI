@@ -1,13 +1,13 @@
 using Grpc.Core;
-using HasznaltAuto.Entities;
+using HasznaltAuto.API.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace HasznaltAuto.API.Services;
+namespace HasznaltAuto.API.GrpcServices;
 
 public class HasznaltAutoService(
     HasznaltAutoDbContext hasznaltAutoDbContext,
     BaseService baseService,
-    ILogger<HasznaltAutoService> logger) 
+    ILogger<HasznaltAutoService> logger)
     : HasznaltAutoGrpc.HasznaltAutoGrpcBase
 {
     public override async Task ListCars(Empty request, IServerStreamWriter<CarType> responseStream, ServerCallContext context)
@@ -194,6 +194,30 @@ public class HasznaltAutoService(
         return await baseService.RequestSuccessful("Car bought.");
     }
 
+    public override async Task ListModels(Empty request, IServerStreamWriter<ModelType> responseStream, ServerCallContext context)
+    {
+        foreach (var modelEntity in hasznaltAutoDbContext.Models)
+        {
+            await responseStream.WriteAsync(MapToProtobufModel(modelEntity));
+        }
+    }
+
+    public override async Task ListMakes(Empty request, IServerStreamWriter<MakeType> responseStream, ServerCallContext context)
+    {
+        foreach (var makeEntity in hasznaltAutoDbContext.Makes)
+        {
+            await responseStream.WriteAsync(MapToProtobufMake(makeEntity));
+        }
+    }
+
+    public override async Task ListFuelTypes(Empty request, IServerStreamWriter<FuelType> responseStream, ServerCallContext context)
+    {
+        foreach (var fuelEntity in hasznaltAutoDbContext.FuelTypes)
+        {
+            await responseStream.WriteAsync(MapToProtobufFuelType(fuelEntity));
+        }
+    }
+
     #region Private Methods
 
     private static CarType MapToProtobufCar(Car car)
@@ -227,6 +251,33 @@ public class HasznaltAutoService(
             Price = carType.Price,
             ProductionDate = carType.ProductionDate,
             VehicleRegistrationId = carType.VehicleRegistrationId,
+        };
+    }
+
+    private static ModelType MapToProtobufModel(Model model)
+    {
+        return new ModelType
+        {
+            Id = model.Id,
+            Name = model.Name
+        };
+    }
+
+    private static MakeType MapToProtobufMake(Make makeEntity)
+    {
+        return new MakeType
+        {
+            Id = makeEntity.Id,
+            Name = makeEntity.Name,
+        };
+    }
+
+    private static FuelType MapToProtobufFuelType(Entities.FuelType fuelEntity)
+    {
+        return new FuelType
+        {
+            Id = fuelEntity.Id,
+            Name = fuelEntity.Name,
         };
     }
 

@@ -1,6 +1,14 @@
 syntax = "proto3";
 
-option csharp_namespace = "HasznaltAuto";
+option csharp_namespace = "HasznaltAuto.API";
+
+import "Protos/base.proto";
+
+service CarGrpc {
+	rpc ListVehicleRegistrations(Empty) returns (stream VehicleRegistrationType) {}
+	rpc GetVehicleRegistration(GetVehicleRegistrationRequest) returns (VehicleRegistrationType) {}
+	rpc CreateVehicleRegistration(VehicleRegistrationRequest) returns (EntityCreatedResponse) {}
+}
 
 message CarType {
 	int32 id = 1;
@@ -39,4 +47,14 @@ message MakeType {
 message ModelType {
 	int32 id = 1;
 	string name = 2;
+}
+
+message GetVehicleRegistrationRequest {
+	int32 license_plate_id = 1;
+}
+
+message VehicleRegistrationRequest {
+	string session_id = 1;
+	string license_plate = 2;
+	int32 license_plate_type_type_id = 3;
 }

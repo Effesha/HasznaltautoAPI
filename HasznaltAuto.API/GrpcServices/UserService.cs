@@ -1,14 +1,23 @@
 ﻿using Grpc.Core;
-using HasznaltAuto.Entities;
+using HasznaltAuto.API.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace HasznaltAuto.API.Services;
+namespace HasznaltAuto.API.GrpcServices;
 
 public class UserService(
     HasznaltAutoDbContext hasznaltAutoDbContext,
     BaseService baseService,
-    ILogger<HasznaltAutoService> logger) : UserGrpc.UserGrpcBase
+    ILogger<HasznaltAutoService> logger)
+    : UserGrpc.UserGrpcBase
 {
+    public override async Task ListUsers(Empty request, IServerStreamWriter<ListUsersResponse> responseStream, ServerCallContext context)
+    {
+        foreach (var userEntity in hasznaltAutoDbContext.Users)
+        {
+            await responseStream.WriteAsync(MapToProtobufListUser(userEntity));
+        }
+    }
+
     public override async Task<ResultResponse> Register(RegistrationRequest request, ServerCallContext context)
     {
         if (request is null || string.IsNullOrWhiteSpace(request.User.Name) || string.IsNullOrWhiteSpace(request.User.Password))
@@ -91,5 +100,14 @@ public class UserService(
         }
 
         return await baseService.RequestSuccessful("Logout successful");
+    }
+
+    public ListUsersResponse MapToProtobufListUser(User userEntity)
+    {
+        return new ListUsersResponse()
+        {
+            Id = userEntity.Id,
+            Name = userEntity.Name,
+        };
     }
 }

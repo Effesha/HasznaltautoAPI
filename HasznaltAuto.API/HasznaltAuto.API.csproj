@@ -7,21 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Protos\base.proto" />
-    <None Remove="Protos\hasznaltauto.proto" />
-  </ItemGroup>
-
-  <ItemGroup>
-	  <Protobuf Include="Protos\base.proto" GrpcServices="Server" />
-	  <Protobuf Include="Protos\hasznaltauto.proto" GrpcServices="Server" />
-	  <Protobuf Include="Protos\car.proto" GrpcServices="Server" />
-	  <Protobuf Include="Protos\user.proto" GrpcServices="Server" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Grpc.AspNetCore" Version="2.60.0" />
-    <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.70.0" />
-    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.60.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.33.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.71.0" />
+    <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.71.0" />
+    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.71.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.76.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
       <PrivateAssets>all</PrivateAssets>
@@ -40,6 +33,10 @@
 
   <ItemGroup>
     <None Include="efpt.config.json.user" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HasznaltAuto.Protos\HasznaltAuto.Protos.csproj" />
   </ItemGroup>
 
 </Project>
