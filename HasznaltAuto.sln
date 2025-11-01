@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HasznaltAuto.Desktop", "Has
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HasznaltAuto.Protos", "HasznaltAuto.Protos\HasznaltAuto.Protos.csproj", "{827321DF-5CB6-4968-A51B-7126DC8069DE}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "HasznaltAuto.Mobile", "HasznaltAuto.Mobile\HasznaltAuto.Mobile.esproj", "{D9B72222-BA27-8611-6A73-708198D9366E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,12 @@ Global
 		{827321DF-5CB6-4968-A51B-7126DC8069DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{827321DF-5CB6-4968-A51B-7126DC8069DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{827321DF-5CB6-4968-A51B-7126DC8069DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9B72222-BA27-8611-6A73-708198D9366E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9B72222-BA27-8611-6A73-708198D9366E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9B72222-BA27-8611-6A73-708198D9366E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D9B72222-BA27-8611-6A73-708198D9366E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9B72222-BA27-8611-6A73-708198D9366E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9B72222-BA27-8611-6A73-708198D9366E}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
