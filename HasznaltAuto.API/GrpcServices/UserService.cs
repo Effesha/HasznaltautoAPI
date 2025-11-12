@@ -1,6 +1,8 @@
 ﻿using Grpc.Core;
 using HasznaltAuto.API.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace HasznaltAuto.API.GrpcServices;
 
@@ -31,15 +33,16 @@ public class UserService(
             return await Task.FromResult(new ResultResponse
             {
                 Success = false,
-                // TODO AB Biztonsági okokból nem a legjobb megoldás, hiszen így információt adunk arról, hogy létezik ilyen user az adatbázisban
+                // Note AB: Biztonsági okokból nem a legjobb megoldás, hiszen így információt adunk arról, hogy létezik ilyen user az adatbázisban
                 Message = "Username taken."
             });
         }
 
+        var hashedPassword = GetHashedPassword(request.User.Password);
         var newUserToAdd = new User
         {
             Name = request.User.Name,
-            Password = request.User.Password
+            Password = hashedPassword
         };
 
         await hasznaltAutoDbContext.Users.AddAsync(newUserToAdd);
@@ -70,10 +73,21 @@ public class UserService(
             });
         }
 
-        var guid = Guid.NewGuid().ToString();
-        lock (baseService._sessionList)
+        var isValidPassword = VerifyPassword(request.User.Password, userToLogin.Password);
+        if (!isValidPassword)
         {
-            baseService._sessionList.Add(guid);
+            return await Task.FromResult(new LoginResponse
+            {
+                SessionId = string.Empty,
+                CurrentUser = 0,
+                Message = "Invalid password"
+            });
+        }
+
+        var guid = Guid.NewGuid().ToString();
+        lock (baseService.sessionList)
+        {
+            baseService.sessionList.Add(guid);
         }
 
         return await Task.FromResult(new LoginResponse
@@ -91,11 +105,11 @@ public class UserService(
             return await baseService.RequestFailed("You are not logged in.");
         }
 
-        lock (baseService._sessionList)
+        lock (baseService.sessionList)
         {
-            if (baseService._sessionList.Contains(request.SessionId))
+            if (baseService.sessionList.Contains(request.SessionId))
             {
-                baseService._sessionList.Remove(request.SessionId);
+                baseService.sessionList.Remove(request.SessionId);
             }
         }
 
@@ -110,4 +124,18 @@ public class UserService(
             Name = userEntity.Name,
         };
     }
+
+    #region Private methods
+    private static string GetHashedPassword(string password)
+    {
+        byte[] bytes = Encoding.UTF8.GetBytes(password);
+        byte[] hash = SHA256.HashData(bytes);
+        return Convert.ToBase64String(hash);
+    }
+
+    private static bool VerifyPassword(string password, string storedHash)
+    {
+        return GetHashedPassword(password) == storedHash;
+    }
+    #endregion
 }

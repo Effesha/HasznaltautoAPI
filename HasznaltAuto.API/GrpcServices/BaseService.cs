@@ -2,7 +2,7 @@
 
 public class BaseService(ILogger<BaseService> logger)
 {
-    public readonly List<string> _sessionList = [];
+    internal readonly List<string> sessionList = [];
 
     public async Task<ResultResponse> RequestFailed(string message)
     {

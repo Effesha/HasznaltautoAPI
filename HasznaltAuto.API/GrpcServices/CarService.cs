@@ -27,7 +27,7 @@ namespace HasznaltAuto.API.GrpcServices
 
         public override async Task<EntityCreatedResponse> CreateVehicleRegistration(VehicleRegistrationRequest request, ServerCallContext context)
         {
-            if (request?.SessionId is null || !baseService._sessionList.Contains(request.SessionId))
+            if (request?.SessionId is null || !baseService.sessionList.Contains(request.SessionId))
             {
                 return new EntityCreatedResponse
                 {

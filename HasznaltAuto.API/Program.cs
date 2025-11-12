@@ -2,7 +2,9 @@ using HasznaltAuto.API.Entities;
 using HasznaltAuto.API.GrpcServices;
 using HasznaltAuto.API.Repositories;
 using HasznaltAuto.API.Repositories.Interfaces;
+using HasznaltAuto.API.REST.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,26 @@ builder.Services.AddDbContext<HasznaltAutoDbContext>(options =>
 });
 
 builder.Services.AddScoped<IRepository<Car>, CarRepository>();
+builder.Services.AddScoped<CarRestService>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Local", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200", "http://localhost:56863")
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+    });
+});
+
+builder.Services.AddControllers();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "HasznaltautoRESTAPI", Version = "v1" });
+    options.EnableAnnotations();
+});
 
 var app = builder.Build();
 
@@ -31,9 +53,14 @@ app.MapGrpcService<CarService>().EnableGrpcWeb();
 app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
 IWebHostEnvironment env = app.Environment;
-if (env.IsDevelopment())
-{
-    app.MapGrpcReflectionService();
-}
+
+app.MapGrpcReflectionService();
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.UseHttpsRedirection();
+app.UseRouting();
+app.UseCors("Local");
+app.MapControllers();
 
 app.Run();

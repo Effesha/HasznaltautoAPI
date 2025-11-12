@@ -92,7 +92,7 @@ public class HasznaltAutoService(
 
     public override async Task<ResultResponse> CreateCar(CreateCarRequest request, ServerCallContext context)
     {
-        if (request?.SessionId is null || !baseService._sessionList.Contains(request.SessionId))
+        if (request?.SessionId is null || !baseService.sessionList.Contains(request.SessionId))
         {
             return await baseService.RequestFailed("Unauthorized access.");
         }
@@ -109,7 +109,7 @@ public class HasznaltAutoService(
 
     public override async Task<ResultResponse> UpdateCar(UpdateCarRequest request, ServerCallContext context)
     {
-        if (request?.SessionId is null || !baseService._sessionList.Contains(request.SessionId))
+        if (request?.SessionId is null || !baseService.sessionList.Contains(request.SessionId))
         {
             return await baseService.RequestFailed("Unauthorized access.");
         }
@@ -139,7 +139,7 @@ public class HasznaltAutoService(
     public override async Task<ResultResponse> DeleteCar(DeleteCarRequest request, ServerCallContext context)
     {
         // TODO AB ez mehet basebe, repetitiv
-        if (request?.SessionId is null || !baseService._sessionList.Contains(request.SessionId))
+        if (request?.SessionId is null || !baseService.sessionList.Contains(request.SessionId))
         {
             return await baseService.RequestFailed("Unauthorized access.");
         }
@@ -167,7 +167,7 @@ public class HasznaltAutoService(
 
     public override async Task<ResultResponse> BuyCar(BuyCarRequest request, ServerCallContext context)
     {
-        if (request?.SessionId is null || !baseService._sessionList.Contains(request.SessionId))
+        if (request?.SessionId is null || !baseService.sessionList.Contains(request.SessionId))
         {
             return await baseService.RequestFailed("Unauthorized access.");
         }
